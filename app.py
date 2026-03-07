@@ -746,7 +746,6 @@ def main():
     
     # Footer
     st.sidebar.markdown("---")
-    st.sidebar.markdown("*Projet NLP - Master Data Science*")
     st.sidebar.markdown(f"*Données : {len(df)} offres*")
 
 
