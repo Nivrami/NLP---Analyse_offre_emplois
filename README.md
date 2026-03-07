@@ -9,10 +9,10 @@ Pipeline ETL et dashboard interactif pour collecter, enrichir et analyser les of
 ## Aperçu
 
 
-[Dashboard](doc/screenshots/Capture1.png)
-[Dashboard](doc/screenshots/Capture2.png)
-[Dashboard](doc/screenshots/Capture3.png)
-[Dashboard](doc/screenshots/Capture4.png)
+![Accueil](doc/screenshots/Capture1.png)
+![Carte](doc/screenshots/Capture2.png)
+![Compétences](doc/screenshots/Capture3.png)
+![Évolution](doc/screenshots/Capture4.png)
 ---
 
 ## Fonctionnalités
@@ -128,12 +128,6 @@ La base de données (`data/offres_emploi.db`) n'est pas versionnée. Pour recons
 
 ---
 
-## Auteur
-
-**[Prénom Nom]** — M2 SISE
-[LinkedIn](https://linkedin.com) · [GitHub](https://github.com/Nivrami)
-
----
 
 ## Licence
 
