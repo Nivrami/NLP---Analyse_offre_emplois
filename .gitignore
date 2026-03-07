@@ -18,3 +18,6 @@ debug_*.html
 
 # Éditeurs
 .vscode/
+
+# Fichier test
+test_api_v2.py
