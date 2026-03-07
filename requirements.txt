@@ -19,6 +19,9 @@ pandas>=2.0.0
 # API France Travail
 requests>=2.31.0
 
+# Variables d'environnement
+python-dotenv>=1.0.0
+
 # Scraping (optionnel - non inclus dans le container de base)
 # beautifulsoup4>=4.12.0
 # selenium>=4.15.0
