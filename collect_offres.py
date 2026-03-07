@@ -16,6 +16,9 @@ import sqlite3
 from datetime import datetime
 from typing import List, Dict, Optional, Tuple
 import time
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Ajouter le dossier parent au path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -35,9 +38,9 @@ from database.db_utils import (
 # CONFIGURATION
 # =============================================================================
 
-# Identifiants API (à remplacer ou utiliser des variables d'environnement)
-CLIENT_ID = "PAR_analyseemploi_5af90b203dd090dbd6a1834d9ccde2f9302a4b2fce9bfd975e4dcacb3a71f0f3"
-CLIENT_SECRET = "495995ad8e506a5d042e73dd1c329cb2174d468e6a6efe9900d4cf60187a8919"
+# Identifiants API — chargés depuis le fichier .env
+CLIENT_ID = os.getenv("FRANCE_TRAVAIL_CLIENT_ID")
+CLIENT_SECRET = os.getenv("FRANCE_TRAVAIL_CLIENT_SECRET")
 
 # Chemin de la base de données
 DB_PATH = "data/offres_emploi.db"
