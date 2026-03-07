@@ -1,0 +1,20 @@
+# Base de données SQLite (données réelles, fichier binaire)
+data/*.db
+
+# Variables d'environnement (credentials API)
+.env
+.env.*
+
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Fichiers de debug temporaires
+debug_*.html
+
+# Outils locaux
+.claude/
+
+# Éditeurs
+.vscode/

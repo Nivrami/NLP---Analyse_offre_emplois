@@ -1,0 +1,58 @@
+{
+  "id": "202PCPK",
+  "intitule": "Technicien/Technicienne de la voie ferrée",
+  "description": "\nParce que la sécurité d'un voyage en train commence avant tout par la qualité de nos infrastructures ferroviaires, nous recherchons un(e) technicien/technicienne passionné(e) pour rejoindre notre grande équipe de la voie !\nCurieux(se), impliqué(e), rigoureux(se), vous aimez le travail bien fait ?\nVous êtes la personne qu'il nous faut !\n\n\nVos journées seront rythmées par les missions suivantes :\no Maintenir les voies ferrées en parfait état \no Surveiller et contrôler les composants de la voie (ballast, rails, traverses).\no Entretenir les abords des voies, et contenir la végétation \n\nVous l'aurez compris, vous serez le « gardien/gardienne du rail », prêt(e) à affronter tous les défis pour maintenir notre réseau ferroviaire en parfait état de marche !\n\n\nVous vous déplacerez aux abords des voies, en marchant sur le ballast à l'air libre et en explorant les tunnels pour assurer vos missions.\n\n\n\nVotre rythme de travail est alternatif, rythmé entre les horaires décalés, nuits, week-ends et jours fériés en fonction de nos priorités et de la circulation des trains.\n\n\n\nPour trouver votre voie et approfondir votre compréhension de cette offre, n'hésitez pas à contacter nos « ambassadeurs / ambassadrices métiers » SNCF RESEAU sur le site :\n\n https://www.myjobglasses.com/search?q=sncf+r%C3%A9seau (https://www.myjobglasses.com/search?q=sncf+r%C3%A9seau)\n\nIls / elles se feront un plaisir de répondre à vos questions !\n\n\n\n\nProfil recherché :\nNous recherchons des candidat(e)s avec un goût prononcé pour les métiers techniques et manuels en équipe et en extérieur.\n\nLe permis B est indispensable pour vous déplacer sur le terrain !\n\n\n\n",
+  "dateCreation": "2026-01-13T17:44:44.212Z",
+  "dateActualisation": "2026-01-13T17:44:44.427Z",
+  "lieuTravail": {
+    "libelle": "38 - Domène",
+    "latitude": 45.202142,
+    "longitude": 5.838086,
+    "codePostal": "38420",
+    "commune": "38150"
+  },
+  "romeCode": "F1711",
+  "romeLibelle": "Poseur / Poseuse de voies ferrées",
+  "appellationlibelle": "Chef / Cheffe d'entretien de la voie ferrée",
+  "entreprise": {
+    "nom": "SNCF RESEAU",
+    "entrepriseAdaptee": false
+  },
+  "typeContrat": "CDI",
+  "typeContratLibelle": "CDI",
+  "natureContrat": "Contrat travail",
+  "experienceExige": "D",
+  "experienceLibelle": "Débutant accepté",
+  "salaire": {
+    "libelle": "Annuel de 24741.0 Euros à 29900.0 Euros sur 12.0 mois"
+  },
+  "dureeTravailLibelle": "35H/semaine\nTravail en horaires décalés...",
+  "dureeTravailLibelleConverti": "Temps plein",
+  "alternance": false,
+  "contact": {
+    "coordonnees1": "https://www.altays-progiciels.com/sncf-recrutement-externe/back/offre/redirectOffreSiteCarriere/1?NoOffre=2769236&NoSociete=389&NoLangue=1&NoSource=16003",
+    "urlPostulation": "https://www.altays-progiciels.com/sncf-recrutement-externe/back/offre/redirectOffreSiteCarriere/1?NoOffre=2769236&NoSociete=389&NoLangue=1&NoSource=16003"
+  },
+  "agence": {},
+  "nombrePostes": 1,
+  "qualificationCode": "6",
+  "qualificationLibelle": "Employé qualifié",
+  "codeNAF": "52.21Z",
+  "secteurActivite": "52",
+  "secteurActiviteLibelle": "Services auxiliaires des transports terrestres",
+  "trancheEffectifEtab": "6 à 9 salariés",
+  "origineOffre": {
+    "origine": "1",
+    "urlOrigine": "https://candidat.francetravail.fr/offres/recherche/detail/202PCPK"
+  },
+  "offresManqueCandidats": false,
+  "contexteTravail": {
+    "horaires": [
+      "35H/semaine\nTravail en horaires décalés",
+      " Travail de nuit",
+      " Travail les week-ends et jours fériés"
+    ]
+  },
+  "entrepriseAdaptee": false,
+  "employeurHandiEngage": false
+}
