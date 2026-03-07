@@ -10,14 +10,17 @@ __pycache__/
 **/__pycache__/
 *.py[cod]
 
-# Fichiers de debug temporaires
+# Fichiers de debug / scripts temporaires
 debug_*.html
+test_api_v2.py
+diagnostic.py
+analyse_modele.py
+exemple_offre.json
+docker-helper.bat
+"Stage HCL*"
 
 # Outils locaux
 .claude/
 
 # Éditeurs
 .vscode/
-
-# Fichier test
-test_api_v2.py
