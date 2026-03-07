@@ -1,0 +1,57 @@
+
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+*.manifest
+*.spec
+
+# Environnements virtuels
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Fichiers temporaires
+*.log
+*.tmp
+*.temp
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Scripts de développement (pas nécessaires dans le container)
+scraper_wttj.py
+collect_offres.py
+enrichissement.py
+enrichissement_v2.py
+enrichissement_llm.py
+analyse_modele.py
+diagnostic.py
+test_api_v2.py
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Fichiers de configuration locaux
+.env
+*.local
