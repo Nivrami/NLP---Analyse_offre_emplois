@@ -1,19 +1,8 @@
 """
-Scraper HelloWork (ex-RegionsJob)
-=================================
-Recupere les offres d'emploi data/IA depuis HelloWork.fr
+Scraper HelloWork 
+=================
 
-HelloWork est un site francais avec beaucoup d'offres de stages et d'alternances.
-
-METHODOLOGIE DE CREATION D'UN SCRAPER:
---------------------------------------
-1. Analyser les URLs de recherche du site
-2. Identifier les selecteurs HTML des cartes d'offres
-3. Extraire les donnees : titre, entreprise, lieu, type de contrat
-4. Gerer la pagination
-5. Stocker en base de donnees
-
-Prerequis:
+Prérequis:
     pip install selenium beautifulsoup4 webdriver-manager requests
 
 Usage:
@@ -37,11 +26,6 @@ from database.db_utils import (
     inserer_offre,
     DB_PATH,
 )
-
-# ============================================================================
-# ETAPE 1: IMPORTS ET VERIFICATION DES DEPENDANCES
-# ============================================================================
-# On importe les bibliotheques necessaires et on verifie leur presence
 
 try:
     from bs4 import BeautifulSoup
@@ -70,9 +54,8 @@ except ImportError:
 import requests
 
 # ============================================================================
-# ETAPE 2: CONFIGURATION
+# CONFIGURATION
 # ============================================================================
-# On definit les constantes : URL de base, mots-cles, mappings
 
 DB_PATH = "data/offres_emploi.db"
 BASE_URL = "https://www.hellowork.com"
@@ -87,13 +70,12 @@ DATA_KEYWORDS = [
     "big data",
 ]
 
-# Mots-cles specifiques pour les stages
-# NOTE: On utilise les memes mots-cles que DATA_KEYWORDS
-# Le filtre "Stage" est applique via le parametre c=Stage dans l'URL
-STAGE_KEYWORDS = DATA_KEYWORDS  # Reutiliser les memes mots-cles
+# Mots-clés spécifiques pour les stages
+# Le filtre "Stage" est appliqué via le paramètre c=Stage dans l'URL
+STAGE_KEYWORDS = DATA_KEYWORDS  # Réutiliser les mêmes mots-clés
 
-# Mapping des villes vers nos codes regions
-# ASTUCE: Ce mapping permet de normaliser les lieux pour l'analyse
+# Mapping des villes vers codes régions
+
 REGION_MAPPING = {
     "paris": ("11", "Ile-de-France"),
     "lyon": ("84", "Auvergne-Rhone-Alpes"),
@@ -110,7 +92,7 @@ REGION_MAPPING = {
 }
 
 # Mapping types de contrat
-# ASTUCE: On normalise les differentes appellations vers un format standard
+
 CONTRACT_MAPPING = {
     "cdi": "CDI",
     "contrat a duree indeterminee": "CDI",
@@ -126,7 +108,7 @@ CONTRACT_MAPPING = {
 
 
 def check_dependencies():
-    """Verifie que toutes les dependances sont installees."""
+    """Verifie que toutes les dépendances sont installees."""
     missing = []
     if not BS4_AVAILABLE:
         missing.append("beautifulsoup4")
@@ -136,16 +118,16 @@ def check_dependencies():
         missing.append("webdriver-manager")
 
     if missing:
-        print("Dependances manquantes:")
+        print("Dépendances manquantes:")
         print(f"   pip install {' '.join(missing)}")
         return False
     return True
 
 
 # ============================================================================
-# ETAPE 3: CLASSE SCRAPER
+# CLASSE SCRAPER
 # ============================================================================
-# La classe principale qui gere toute la logique de scraping
+
 
 class HelloWorkScraper:
     """
@@ -166,8 +148,7 @@ class HelloWorkScraper:
         Initialise le scraper.
 
         Args:
-            headless: Si True, le navigateur s'execute sans interface graphique
-                     (plus rapide, utilise moins de ressources)
+            headless: Si True, le navigateur s'exécute sans interface graphique
         """
         self.driver = None
         self.headless = headless
@@ -195,18 +176,18 @@ class HelloWorkScraper:
 
         options = Options()
 
-        # Mode headless = pas de fenetre visible
+        # Mode headless = pas de fenêtre visible
         if self.headless:
             options.add_argument("--headless=new")
 
-        # Options pour eviter les erreurs courantes
+        # Options pour éviter les erreurs courantes
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-gpu")
         options.add_argument("--window-size=1920,1080")
         options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
 
-        # Desactiver les notifications et popups
+        # Désactiver les notifications et popups
         prefs = {
             "profile.default_content_setting_values.notifications": 2,
             "profile.default_content_settings.popups": 0,
@@ -238,10 +219,10 @@ class HelloWorkScraper:
         HelloWork URL format (decouvert via l'interface):
         https://www.hellowork.com/fr-fr/emploi/recherche.html?k=data&l=Lyon&c=Stage&st=date
 
-        Parametres:
-        - k = mot-cle de recherche
+        Paramètres:
+        - k = mot-clé de recherche
         - l = lieu (ville)
-        - c = type de contrat (Stage, CDI, CDD, Alternance) - AVEC MAJUSCULE!
+        - c = type de contrat (Stage, CDI, CDD, Alternance) - EN MAJUSCULES
         - st = tri (date ou relevance)
         - p = page
         """
@@ -256,7 +237,7 @@ class HelloWorkScraper:
         if location:
             params["l"] = location  # l = location (lieu)
 
-        # Type de contrat - IMPORTANT: utiliser la bonne casse!
+        # Type de contrat - IMPORTANT: utiliser la bonne casse
         if contract_type:
             # HelloWork utilise des majuscules: Stage, CDI, CDD, Alternance
             contract_mapping = {
@@ -279,10 +260,10 @@ class HelloWorkScraper:
         Recupere le contenu HTML d'une page via Selenium.
 
         ETAPES:
-        1. Initialiser le driver si necessaire
+        1. Initialiser le driver si nécessaire
         2. Charger la page
         3. Attendre le chargement du JS
-        4. Gerer les popups (cookies, etc.)
+        4. Gérer les popups (cookies, etc.)
         5. Retourner le HTML
         """
         if not self.driver:
@@ -295,7 +276,7 @@ class HelloWorkScraper:
             # IMPORTANT: Attendre que le JS charge le contenu
             time.sleep(2)
 
-            # Fermer les popups de cookies si present
+            # Fermer les popups de cookies si présent
             try:
                 cookie_selectors = [
                     "#didomi-notice-agree-button",
@@ -314,7 +295,7 @@ class HelloWorkScraper:
             except Exception:
                 pass
 
-            # Attendre que les offres soient chargees (chercher un element specifique)
+            # Attendre que les offres soient chargées (chercher un élément spécifique)
             try:
                 # Attendre qu'un lien d'offre apparaisse
                 WebDriverWait(self.driver, 10).until(
@@ -322,7 +303,7 @@ class HelloWorkScraper:
                 )
                 print("      Offres chargees")
             except TimeoutException:
-                print("      Timeout: offres non trouvees, tentative avec scroll...")
+                print("      Timeout: offres non trouvées, tentative avec scroll...")
 
             # Scroll pour charger plus de contenu (lazy loading)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight/3);")
@@ -381,7 +362,7 @@ class HelloWorkScraper:
             except Exception as e:
                 continue
 
-        # Dedupliquer par titre si necessaire
+        # Dédupliquer par titre si nécessaire
         unique_jobs = []
         seen_titles = set()
         for job in jobs:
@@ -416,7 +397,7 @@ class HelloWorkScraper:
         if not lines:
             return None
 
-        # Le titre est generalement la premiere ligne significative
+        # Le titre est généralement la première ligne significative
         for line in lines[:3]:
             if len(line) > 10 and len(line) < 150:
                 job['titre'] = line
@@ -453,7 +434,7 @@ class HelloWorkScraper:
 
     def get_job_details(self, url: str) -> Optional[Dict]:
         """
-        Recupere les details d'une offre (description, etc.) depuis sa page.
+        Récupère les details d'une offre (description, etc.) depuis sa page.
 
         Args:
             url: URL de l'offre
@@ -496,7 +477,7 @@ class HelloWorkScraper:
                     details['description'] = desc_elem.get_text(separator='\n', strip=True)
                     break
 
-            # Si pas trouve avec selecteurs, chercher le plus gros bloc de texte
+            # Si non trouvé avec sélecteurs, chercher le plus gros bloc de texte
             if not details.get('description'):
                 all_divs = soup.find_all('div')
                 best_div = None
@@ -516,7 +497,7 @@ class HelloWorkScraper:
                 if best_div and best_len > 200:
                     details['description'] = best_div.get_text(separator='\n', strip=True)[:5000]
 
-            # Nettoyer la description des textes de cookies si present
+            # Nettoyer la description des textes de cookies si présent
             if details.get('description'):
                 desc = details['description']
                 # Supprimer les textes de cookies/RGPD
@@ -610,7 +591,7 @@ class HelloWorkScraper:
             job['salaire'] = salary_elem.get_text(strip=True)
 
         # ====== ID UNIQUE ======
-        # Generer un ID a partir de l'URL ou du titre
+        # Générer un ID a partir de l'URL ou du titre
         if job.get('url'):
             # Extraire un ID de l'URL si possible
             match = re.search(r'/(\d+)', job['url'])
@@ -636,7 +617,7 @@ class HelloWorkScraper:
             fetch_details: Si True, recupere la description de chaque offre
 
         Returns:
-            Liste des offres trouvees
+            Liste des offres trouvées
         """
         all_jobs = []
         seen_ids = set()
@@ -669,7 +650,7 @@ class HelloWorkScraper:
                     seen_ids.add(job_id)
                     new_jobs.append(job)
 
-            # Recuperer les details (description) de chaque offre
+            # Récupérer les détails (description) de chaque offre
             if fetch_details:
                 print(f"      Recuperation des descriptions...")
                 for i, job in enumerate(new_jobs):
@@ -684,7 +665,7 @@ class HelloWorkScraper:
             all_jobs.extend(new_jobs)
             print(f"      -> {len(new_jobs)} nouvelles offres (total: {len(all_jobs)})")
 
-            # Arreter si peu de resultats (probablement derniere page)
+            # Arrêter si trop peu de résultats (dernière page)
             if len(new_jobs) < 3:
                 break
 
@@ -697,7 +678,7 @@ class HelloWorkScraper:
 
 
 # ============================================================================
-# ETAPE 4: FONCTIONS BASE DE DONNEES
+# FONCTIONS BASE DE DONNEES
 # ============================================================================
 # Fonctions pour stocker les offres dans SQLite
 
@@ -706,7 +687,7 @@ class HelloWorkScraper:
 
 
 # ============================================================================
-# ETAPE 5: FONCTIONS DE COLLECTE
+# FONCTIONS DE COLLECTE
 # ============================================================================
 
 def collecter_offres(keywords: List[str], contract_type: str = None,
@@ -716,10 +697,10 @@ def collecter_offres(keywords: List[str], contract_type: str = None,
 
     FLUX:
     1. Connexion a la base
-    2. Creer/recuperer la source HelloWork
-    3. Pour chaque mot-cle:
+    2. Créer/recuperer la source HelloWork
+    3. Pour chaque mot-clé:
        - Scraper les pages
-       - Inserer chaque offre (si pas doublon)
+       - Insérer chaque offre (si pas doublon)
     4. Retourner les statistiques
     """
     if not check_dependencies():
@@ -794,12 +775,12 @@ def afficher_stats(db_path: str = DB_PATH):
 
 
 # ============================================================================
-# ETAPE 6: MAIN - POINT D'ENTREE
+# MAIN - POINT D'ENTREE
 # ============================================================================
 
 def main():
     """
-    Point d'entree du script.
+    Point d'entrée du script.
 
     ARGUMENTS:
     --test     : Mode test (1 page, 1 mot-cle)
