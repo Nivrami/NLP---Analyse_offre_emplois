@@ -1,8 +1,7 @@
 """
 Client API France Travail
 ==========================
-Client personnalisé pour l'API Offres d'emploi v2 de France Travail.
-Utilise les URLs actuelles (2024-2025).
+
 """
 
 import requests
@@ -13,9 +12,7 @@ import json
 
 
 class FranceTravailClient:
-    """
-    Client pour l'API France Travail (ex Pôle Emploi).
-    
+    """    
     Exemple d'utilisation:
         client = FranceTravailClient(client_id="xxx", client_secret="yyy")
         offres = client.search({"motsCles": "data scientist", "region": "84"})
@@ -364,30 +361,30 @@ if __name__ == "__main__":
     client = FranceTravailClient(CLIENT_ID, CLIENT_SECRET)
     
     # Test 1: Recherche simple
-    print("\n📋 Test recherche simple...")
+    print("\n  Test recherche simple...")
     result = client.search()
-    print(f"   ✅ {result['Content-Range']['max_results']} offres disponibles")
-    print(f"   ✅ {len(result['resultats'])} offres récupérées")
+    print(f"   {result['Content-Range']['max_results']} offres disponibles")
+    print(f"   {len(result['resultats'])} offres récupérées")
     
     # Test 2: Recherche data scientist
-    print("\n📋 Test recherche 'data scientist'...")
+    print("\n  Test recherche 'data scientist'...")
     result = client.search({"motsCles": "data scientist"})
-    print(f"   ✅ {result['Content-Range']['max_results']} offres trouvées")
+    print(f"    {result['Content-Range']['max_results']} offres trouvées")
     
     # Test 3: Afficher une offre
     if result['resultats']:
         offre = result['resultats'][0]
-        print(f"\n📋 Exemple d'offre:")
+        print(f"\n  Exemple d'offre:")
         print(f"   Titre: {offre.get('intitule', 'N/A')}")
         print(f"   Entreprise: {offre.get('entreprise', {}).get('nom', 'N/A')}")
         print(f"   Lieu: {offre.get('lieuTravail', {}).get('libelle', 'N/A')}")
         print(f"   Contrat: {offre.get('typeContrat', 'N/A')}")
     
     # Test 4: Référentiels
-    print("\n📋 Test référentiels...")
+    print("\n  Test référentiels...")
     regions = client.referentiel("regions")
-    print(f"   ✅ {len(regions)} régions récupérées")
+    print(f"     {len(regions)} régions récupérées")
     
     print("\n" + "=" * 60)
-    print("✅ TOUS LES TESTS SONT PASSÉS !")
+    print("  TOUS LES TESTS SONT PASSÉS !")
     print("=" * 60)

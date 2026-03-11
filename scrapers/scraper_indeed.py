@@ -1,11 +1,9 @@
 """
 Scraper Indeed France
 =====================
-Recupere les offres d'emploi data/IA depuis Indeed.fr
-
 Utilise Selenium pour gerer le JavaScript et BeautifulSoup pour parser le HTML.
 
-Prerequis:
+Prérequis:
     pip install selenium beautifulsoup4 webdriver-manager requests
 
 Usage:
@@ -75,7 +73,7 @@ DATA_KEYWORDS = [
     "big data",
 ]
 
-# Mots-cles specifiques pour les stages
+# Mots-clés specifiques pour les stages
 STAGE_KEYWORDS = [
     "stage data scientist",
     "stage data analyst",
@@ -122,7 +120,7 @@ CONTRACT_MAPPING = {
 
 
 def check_dependencies():
-    """Verifie que toutes les dependances sont installees."""
+    """Vérifie que toutes les dependances sont installées."""
     missing = []
     if not BS4_AVAILABLE:
         missing.append("beautifulsoup4")
@@ -146,7 +144,7 @@ class IndeedScraper:
         Initialise le scraper.
 
         Args:
-            headless: Si True, le navigateur s'execute en arriere-plan
+            headless: Si True, le navigateur s'execute en arrière-plan
         """
         self.driver = None
         self.headless = headless
@@ -170,7 +168,7 @@ class IndeedScraper:
         options.add_argument("--window-size=1920,1080")
         options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
 
-        # Desactiver les notifications et popups
+        # Désactiver les notifications et popups
         prefs = {
             "profile.default_content_setting_values.notifications": 2,
             "profile.default_content_settings.popups": 0,
@@ -217,7 +215,7 @@ class IndeedScraper:
         return f"{BASE_URL}/emplois?" + urlencode(params)
 
     def get_page_content(self, url: str) -> Optional[str]:
-        """Recupere le contenu HTML d'une page via Selenium."""
+        """Récupère le contenu HTML d'une page via Selenium."""
         if not self.driver:
             self.init_driver()
 
@@ -225,7 +223,7 @@ class IndeedScraper:
             self.driver.get(url)
             time.sleep(2)  # Attendre le chargement JavaScript
 
-            # Fermer les popups de cookies si present
+            # Fermer les popups de cookies si présents
             try:
                 cookie_btn = self.driver.find_element(By.ID, "onetrust-accept-btn-handler")
                 cookie_btn.click()
@@ -327,7 +325,7 @@ class IndeedScraper:
         return job if job.get('titre') else None
 
     def get_job_details(self, job_url: str) -> Dict:
-        """Recupere les details complets d'une offre."""
+        """Récupère les détails complets d'une offre."""
         html = self.get_page_content(job_url)
         if not html:
             return {}
@@ -340,7 +338,7 @@ class IndeedScraper:
         if desc_elem:
             details['description'] = desc_elem.get_text(separator='\n', strip=True)
 
-        # Infos supplementaires
+        # Infos supplémentaires
         info_section = soup.find('div', class_=re.compile(r'jobsearch-JobInfoHeader'))
         if info_section:
             # Type de contrat, experience, etc.
@@ -360,14 +358,14 @@ class IndeedScraper:
         Recherche des offres d'emploi.
 
         Args:
-            keyword: Mot-cle de recherche
-            location: Ville ou region
+            keyword: Mot-clé de recherche
+            location: Ville ou région
             job_type: Type de contrat (stage, cdi, etc.)
-            max_pages: Nombre maximum de pages a scraper
-            delay: Delai entre chaque requete (en secondes)
+            max_pages: Nombre maximum de pages à scraper
+            delay: Délai entre chaque requete (en secondes)
 
         Returns:
-            Liste des offres trouvees
+            Liste des offres trouvées
         """
         all_jobs = []
         seen_ids = set()
@@ -386,7 +384,7 @@ class IndeedScraper:
             jobs = self.parse_job_cards(html)
 
             if not jobs:
-                print(f"   Aucune offre trouvee sur la page {page + 1}")
+                print(f"   Aucune offre trouvée sur la page {page + 1}")
                 break
 
             # Filtrer les doublons
@@ -400,7 +398,7 @@ class IndeedScraper:
             all_jobs.extend(new_jobs)
             print(f"   -> {len(new_jobs)} nouvelles offres (total: {len(all_jobs)})")
 
-            if len(new_jobs) < 5:  # Probablement la derniere page
+            if len(new_jobs) < 5:  # Probablement la dernière page
                 break
 
             time.sleep(delay)
@@ -426,10 +424,10 @@ def collecter_offres(keywords: List[str], job_type: str = None,
     Collecte les offres Indeed et les stocke en base.
 
     Args:
-        keywords: Liste de mots-cles a rechercher
+        keywords: Liste de mots-clès à rechercher
         job_type: Type de contrat (stage, cdi, etc.)
         max_pages: Nombre de pages par mot-cle
-        db_path: Chemin de la base de donnees
+        db_path: Chemin de la base de données
 
     Returns:
         Tuple (nombre insere, nombre doublons)
