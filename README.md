@@ -122,7 +122,7 @@ Les credentials API France Travail sont à configurer dans le fichier `.env` (vo
 
 ## Données
 
-La base contient actuellement **1 029 offres** collectées depuis France Travail, couvrant les métiers : Data Scientist, Data Analyst, Data Engineer, Machine Learning Engineer, NLP Engineer, et autres profils Data/IA.
+La base contient actuellement **1 029 offres actives** collectées depuis France Travail, couvrant les métiers : Data Scientist, Data Analyst, Data Engineer, Machine Learning Engineer, NLP Engineer, et autres profils Data/IA.
 
 La base de données (`data/offres_emploi.db`) n'est pas versionnée. Pour reconstituer une base, lancer la collecte après configuration des credentials.
 
