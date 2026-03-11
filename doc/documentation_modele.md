@@ -217,5 +217,3 @@ CREATE INDEX idx_lieu_departement ON dim_lieu(code_departement);
 - Salaire renseigné dans seulement 32% des cas
 - Compétences explicites pour 14% des offres seulement
 - 546 offres sans région identifiée (départements non mappés)
-
-

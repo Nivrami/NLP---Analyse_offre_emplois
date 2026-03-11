@@ -1,7 +1,6 @@
 """
 Scraper Welcome to the Jungle
 =============================
-Récupère les offres d'emploi data/IA depuis Welcome to the Jungle.
 
 Utilise Selenium pour gérer le JavaScript et BeautifulSoup pour parser le HTML.
 
@@ -276,7 +275,7 @@ class WTTJScraper:
         for selector in selectors:
             job_cards = soup.select(selector)
             if job_cards:
-                print(f"      ✅ Trouvé {len(job_cards)} offres avec sélecteur: {selector}")
+                print(f" Trouvé {len(job_cards)} offres avec sélecteur: {selector}")
                 break
         
         if not job_cards:
@@ -336,7 +335,7 @@ class WTTJScraper:
                 })
                 
             except Exception as e:
-                print(f"      ⚠️ Erreur parsing carte: {e}")
+                print(f" Erreur parsing carte: {e}")
                 continue
         
         return jobs
@@ -463,7 +462,7 @@ class WTTJScraper:
             return details
             
         except Exception as e:
-            print(f"      ⚠️ Erreur détails {url}: {e}")
+            print(f" Erreur détails {url}: {e}")
             return None
 
 
@@ -493,19 +492,19 @@ def test_scraper():
         print("\n📋 Parsing des résultats...")
         jobs = scraper.parse_job_list(html)
         
-        print(f"\n✅ {len(jobs)} offres trouvées")
+        print(f"\n{len(jobs)} offres trouvées")
         
         if jobs:
-            print("\n📝 Exemple d'offre:")
+            print("\n Exemple d'offre:")
             for key, value in jobs[0].items():
                 print(f"   {key}: {value}")
             
             # Récupérer les détails de la première offre
             if jobs[0].get('url'):
-                print(f"\n🔍 Récupération des détails...")
+                print(f"\n Récupération des détails...")
                 details = scraper.get_job_details(jobs[0]['url'])
                 if details:
-                    print("\n📝 Détails:")
+                    print("\n Détails:")
                     for key, value in details.items():
                         if value:
                             val_str = str(value)[:100] + "..." if len(str(value)) > 100 else str(value)
@@ -514,7 +513,7 @@ def test_scraper():
     finally:
         scraper.close()
     
-    print("\n✅ Test terminé !")
+    print("\n Test terminé !")
 
 
 def collecter_offres(max_pages: int = 10, keywords: List[str] = None, contract_type: str = None):
@@ -549,7 +548,7 @@ def collecter_offres(max_pages: int = 10, keywords: List[str] = None, contract_t
     
     try:
         for keyword in keywords:
-            print(f"\n📊 Recherche : '{keyword}'")
+            print(f"\n Recherche : '{keyword}'")
             
             for page in range(1, max_pages + 1):
                 print(f"   Page {page}/{max_pages}...", end=" ")
@@ -600,7 +599,7 @@ def collecter_offres(max_pages: int = 10, keywords: List[str] = None, contract_t
         conn.close()
     
     print("\n" + "=" * 60)
-    print(f"✅ COLLECTE TERMINÉE")
+    print(f"   COLLECTE TERMINÉE")
     print(f"   {total_inserees} offres insérées")
     print(f"   {total_doublons} doublons ignorés")
     print("=" * 60)
@@ -630,7 +629,7 @@ def main():
         collecter_offres(max_pages=args.pages, keywords=args.keywords, contract_type=contract_type)
     else:
         parser.print_help()
-        print("\n💡 Exemples:")
+        print("\n  Exemples:")
         print("   python scraper_wttj.py --test")
         print("   python scraper_wttj.py --collect --pages 3")
         print("   python scraper_wttj.py --collect --stages           # Collecter les stages")
