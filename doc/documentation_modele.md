@@ -143,6 +143,8 @@ Basée sur le référentiel ROME (Répertoire Opérationnel des Métiers et des 
 |--------|------|-----|
 | France Travail | API | francetravail.fr |
 | Welcome to the Jungle | Scraping | welcometothejungle.com |
+| Indeed | Scraping | indeed.fr |
+| HelloWork | Scraping | hellowork.com |
 
 ## 4. Tables associatives
 
@@ -197,7 +199,7 @@ CREATE INDEX idx_lieu_departement ON dim_lieu(code_departement);
 
 | Élément | Volume |
 |---------|--------|
-| Offres d'emploi | 2 108 |
+| Offres d'emploi | 1 029 |
 | Entreprises | 566 |
 | Localisations | 491 |
 | Compétences | 679 |
@@ -216,7 +218,4 @@ CREATE INDEX idx_lieu_departement ON dim_lieu(code_departement);
 - Compétences explicites pour 14% des offres seulement
 - 546 offres sans région identifiée (départements non mappés)
 
-### Recommandations
-1. Enrichir le mapping département → région pour les départements manquants
-2. Envisager l'extraction de compétences par NLP depuis les descriptions
-3. Parser le champ salaire pour extraire les valeurs numériques
+

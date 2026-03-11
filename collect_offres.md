@@ -1,3 +1,8 @@
+# 💻 Script : collect_offres.py
+
+**Source :** `collect_offres.py`
+
+```python
 """
 Script de collecte des offres d'emploi
 ======================================
@@ -418,61 +423,36 @@ def inserer_langues(conn: sqlite3.Connection, id_offre: int, langues: List[Dict]
 # FONCTIONS DE COLLECTE
 # =============================================================================
 
-def collecter_offres(client: FranceTravailClient, params: Dict,
+def collecter_offres(client: FranceTravailClient, params: Dict, 
                      conn: sqlite3.Connection, id_source: int,
-                     max_offres: int = None) -> Tuple[int, int, set]:
+                     max_offres: int = None) -> Tuple[int, int]:
     """
     Collecte les offres correspondant aux critères et les stocke en base.
-
+    
     Returns:
-        Tuple (nombre d'offres insérées, nombre d'offres ignorées car doublon, ids collectés)
+        Tuple (nombre d'offres insérées, nombre d'offres ignorées car doublon)
     """
     inserees = 0
     doublons = 0
-    ids_collectes = set()
-
+    
     def progress(fetched, total):
         print(f"\r   Récupération : {fetched}/{total} offres...", end="", flush=True)
-
+    
     try:
         offres = client.search_all(params, max_results=max_offres, progress_callback=progress)
         print()  # Nouvelle ligne après la progression
-
+        
         for offre in offres:
-            ids_collectes.add(offre.get("id"))
             result = inserer_offre(conn, offre, id_source)
             if result:
                 inserees += 1
             else:
                 doublons += 1
-
+        
     except Exception as e:
         print(f"\n   ⚠️ Erreur lors de la collecte : {e}")
-
-    return inserees, doublons, ids_collectes
-
-
-def marquer_offres_expirees(conn: sqlite3.Connection, id_source: int, ids_actifs: set) -> int:
-    """
-    Marque actif=0 pour les offres de cette source qui ne sont plus dans ids_actifs.
-
-    Returns:
-        Nombre d'offres marquées expirées
-    """
-    if not ids_actifs:
-        return 0
-
-    cursor = conn.cursor()
-    placeholders = ",".join("?" * len(ids_actifs))
-    cursor.execute(f"""
-        UPDATE fait_offres
-        SET actif = 0
-        WHERE id_source = ?
-          AND actif = 1
-          AND id_offre_source NOT IN ({placeholders})
-    """, [id_source] + list(ids_actifs))
-    conn.commit()
-    return cursor.rowcount
+    
+    return inserees, doublons
 
 
 def collecter_data_jobs(client: FranceTravailClient, conn: sqlite3.Connection, 
@@ -484,25 +464,21 @@ def collecter_data_jobs(client: FranceTravailClient, conn: sqlite3.Connection,
     
     total_inserees = 0
     total_doublons = 0
-    tous_ids_actifs = set()
-
+    
     for keyword in DATA_KEYWORDS:
         print(f"\n📊 Recherche : '{keyword}'")
-
-        params = {"motsCles": keyword}
-
-        inserees, doublons, ids = collecter_offres(client, params, conn, id_source)
+        
+        # Recherche sans filtre de date (l'API retourne les offres actives récentes)
+        params = {
+            "motsCles": keyword
+        }
+        
+        inserees, doublons = collecter_offres(client, params, conn, id_source)
         total_inserees += inserees
         total_doublons += doublons
-        tous_ids_actifs.update(ids)
-
+        
         print(f"   ✅ {inserees} nouvelles offres, {doublons} doublons ignorés")
-
-    # Marquer les offres disparues de l'API comme expirées
-    expirees = marquer_offres_expirees(conn, id_source, tous_ids_actifs)
-    if expirees:
-        print(f"\n🗓️  {expirees} offres marquées expirées (plus retournées par l'API)")
-
+    
     print(f"\n📈 TOTAL : {total_inserees} offres insérées, {total_doublons} doublons")
     return total_inserees
 
@@ -658,3 +634,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+```

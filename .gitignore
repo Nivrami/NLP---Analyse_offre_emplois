@@ -17,7 +17,7 @@ diagnostic.py
 analyse_modele.py
 exemple_offre.json
 docker-helper.bat
-"Stage HCL*"
+
 
 # Outils locaux
 .claude/
