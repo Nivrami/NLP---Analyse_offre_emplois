@@ -1,5 +1,7 @@
 # Analyse des offres d'emploi Data/IA en France
 
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white) ![Plotly](https://img.shields.io/badge/Plotly-3F4F75?logo=plotly&logoColor=white) ![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white) ![Ollama](https://img.shields.io/badge/Ollama-000000?logo=ollama&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+
 Pipeline ETL et dashboard interactif pour collecter, enrichir et analyser les offres d'emploi dans les métiers de la Data Science et de l'IA en France.
 
 > Projet réalisé dans le cadre du Master 2 SISE (Statistique et Informatique pour la Science des données).
