@@ -14,9 +14,8 @@ from api.france_travail_client import FranceTravailClient
 from datetime import datetime, timedelta
 
 # Mets tes identifiants ici
-CLIENT_ID = "CLIENT_ID_SUPPRIME"
-CLIENT_SECRET = "CLIENT_SECRET_SUPPRIME"
-
+***REMOVED***
+***REMOVED***
 client = FranceTravailClient(CLIENT_ID, CLIENT_SECRET)
 
 print("=" * 60)
