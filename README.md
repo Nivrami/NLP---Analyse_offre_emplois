@@ -28,6 +28,18 @@ Pipeline ETL et dashboard interactif pour collecter, enrichir et analyser les of
 
 ---
 
+## Documentation
+- [Collecte des offres](doc/collect_offres.md)
+- [Enrichissement NLP](doc/enrichissement.md)
+- [Application Streamlit](doc/app.md)
+- [Analyse du modèle](doc/analyse_modele.md)
+- [Documentation du modèle](doc/documentation_modele.md)
+
+
+---
+
+
+
 ## Architecture
 
 ```
